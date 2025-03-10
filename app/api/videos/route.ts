@@ -52,10 +52,11 @@ export async function POST(request: Request) {
         width: 1080,
         quality: body.transformation?.quality ?? 100,
       }
-      }
-      Video.create(videoData)
     }
-  } catch (error) {
-    
+      const newVideo = await Video.create(videoData)
+      return NextResponse.json(newVideo)
+    }
+  catch (error) {
+    return NextResponse.json({error: `Failed to create a Video ${error}`},{status: 200})
   }
-}
+} 
