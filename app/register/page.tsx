@@ -14,8 +14,19 @@ function Register() {
       setError("Password does not match")
     }
     try {
-      await fetch("api/auth/register")
+      const res = await fetch("api/auth/register", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email, password})
+      })
+
+      const data = res.json()
+      if(!res.ok){
+        setError("Registration failed")
+      }
+      router.push("/login")
     } catch (error) {
+      console.log(error)
       
     }
   }
